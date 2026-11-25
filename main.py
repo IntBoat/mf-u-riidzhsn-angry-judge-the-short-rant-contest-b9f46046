@@ -1,20 +1,24 @@
 #!/usr/bin/env python3
-"""Angry Judge: The Short Rant Contest (make.fun).
+"""Angry Judge: The Short Rant Contest — a make.fun one-line entry.
 
-Writes the entry -- one short rant about a small everyday annoyance --
-to /output/entry.txt, where the sealed scorer reads it.
+The program writes the entry text to /output/entry.txt, where the
+competition's sealed scorer reads it.
 """
 
-import os
+from pathlib import Path
 
-TEXT = 'The office printer has one job, and it performs it with the enthusiasm of a cat being asked to fetch. It jams on page one, blinks a light no manual has ever explained, and then — only once the deadline has passed — prints all seventeen copies at once, warm, smug, and completely useless.'
+ENTRY = "The office printer has one job, and it has chosen violence: it jams on page one, claims it is out of toner it had yesterday, and then prints my document in the middle of someone else's meeting notes."
+
+OUTPUT = Path("/output/entry.txt")
 
 
-def main():
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8") as f:
-        f.write(TEXT)
+def write_entry() -> None:
+    """Write the entry text to the output path."""
+    text = ENTRY.strip()
+    assert text, "entry text must not be blank"
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT.write_text(text, encoding="utf-8")
 
 
 if __name__ == "__main__":
-    main()
+    write_entry()
